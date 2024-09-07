@@ -1,0 +1,15 @@
+{
+  "name": "api-node",
+  "version": "1.0.0",
+  "description": "My API NodeJs built in NestJS and Prisma (service for profile).",
+  "main": "index.js",
+  "repository": "https://github.com/jsi1v4/api-node.git",
+  "author": "jsi1v4 <git@jsi1v4.com>",
+  "license": "MIT",
+  "private": false,
+  "scripts": {
+    "dev": "",
+    "test": "",
+    "build": ""
+  }
+}
