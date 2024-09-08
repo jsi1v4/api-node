@@ -1,6 +1,6 @@
 # API NodeJS
 
-My API NodeJs built in NestJS and Prisma (service for profile), [take a look](https://api-node.josepaulo.dev/api/v1.0/welcome) 🖖.
+My API NodeJs built in NestJS and Prisma, [take a look](https://api-node.josepaulo.dev/api/v1.0/welcome) 🖖.
 
 ![**Preview**](preview.gif)
 
@@ -16,6 +16,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - [TypeScript](https://www.typescriptlang.org)
 - [NestJS](https://docs.nestjs.com)
 - [Prisma](https://www.prisma.io)
+- [Docker](https://www.docker.com)
 
 ## Como baixar e executar o projeto
 
