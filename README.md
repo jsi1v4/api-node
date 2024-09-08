@@ -4,6 +4,12 @@ My API NodeJs built in NestJS and Prisma, [take a look](https://api-node.josepau
 
 ![**Preview**](preview.gif)
 
+## Sobre
+
+Utilizei esta API para aplicar meus estudos do framework NestJs e do ORM Prisma. Com ela consigo criar usuarios, gerenciar perfis e criar analises e planejamento pessoais.
+
+> Conto mais detalhes no [Front-end](https://github.com/jsi1v4/my-planning-app) e devops, arquitetura e docker compose [aqui](https://github.com/jsi1v4/devops) 🖖😎.
+
 ## Requisitos
 
 - [NodeJS 18.x](https://nodejs.org)
