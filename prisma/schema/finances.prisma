@@ -1,45 +1,29 @@
 model FinancesBuget {
   id Int @id @default(autoincrement())
 
-  title   String
-  content String?
-  enabled Boolean? @default(false)
+  title    String
+  content  String?
+  createAt DateTime
+  from     DateTime
+  to       DateTime
+  value    Float
+  enabled  Boolean? @default(false)
 
-  user              User                @relation(fields: [userId], references: [id])
-  userId            Int
-  FinancesBugetItem FinancesBugetItem[]
-}
-
-model FinancesBugetItem {
-  id Int @id @default(autoincrement())
-
-  year  Int
-  month Int
-  value Float
-
-  buget   FinancesBuget @relation(fields: [bugetId], references: [id])
-  bugetId Int
+  user   User @relation(fields: [userid], references: [id])
+  userid Int
 }
 
 model FinancesForecast {
   id Int @id @default(autoincrement())
 
-  title   String
-  content String?
-  enabled Boolean? @default(false)
+  title    String
+  content  String?
+  createAt DateTime
+  from     DateTime
+  to       DateTime
+  value    Float
+  enabled  Boolean? @default(false)
 
-  user                 User                   @relation(fields: [userId], references: [id])
-  userId               Int
-  FinancesForecastItem FinancesForecastItem[]
-}
-
-model FinancesForecastItem {
-  id Int @id @default(autoincrement())
-
-  year  Int
-  month Int
-  value Float
-
-  forecast   FinancesForecast @relation(fields: [forecastId], references: [id])
-  forecastId Int
+  user   User @relation(fields: [userid], references: [id])
+  userid Int
 }

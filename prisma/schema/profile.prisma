@@ -1,7 +1,8 @@
 model ProfileType {
   id Int @id @default(autoincrement())
 
-  name    String
+  description    String
+
   Profile Profile[]
 }
 
@@ -10,11 +11,11 @@ model Profile {
 
   title   String
   content String
-  link String
-  image String
+  link    String
+  image   String
 
-  user   User        @relation(fields: [userId], references: [id])
-  userId Int
-  type   ProfileType @relation(fields: [typeId], references: [id])
-  typeId Int
+  user   User        @relation(fields: [userid], references: [id])
+  userid Int
+  type   ProfileType @relation(fields: [typeid], references: [id])
+  typeid Int
 }

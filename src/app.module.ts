@@ -1,10 +1,24 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
+import { RouterModule } from '@nestjs/core';
+import { ThrottlerModule } from '@nestjs/throttler';
+import { ApiModule } from './api/api.module';
+import apiRoutes from './api/api.routes';
 
 @Module({
-  imports: [],
-  controllers: [AppController],
-  providers: [AppService],
+  imports: [
+    ThrottlerModule.forRoot([
+      {
+        ttl: 60000,
+        limit: 10
+      }
+    ]),
+    ApiModule,
+    RouterModule.register([
+      {
+        path: '/api',
+        children: apiRoutes
+      }
+    ])
+  ]
 })
 export class AppModule {}

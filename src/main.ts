@@ -4,7 +4,7 @@ import { AppModule } from './app.module';
 import config from './config';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, { cors: true });
 
   //* SWAGGER
   if (config.env.dev) {
