@@ -1,5 +1,5 @@
+import pkg from '@/package.json';
 import dotenv from 'dotenv';
-import pkg from '~/../package.json';
 
 dotenv.config();
 

@@ -1,5 +1,6 @@
 import { Controller, Get, Query } from '@nestjs/common';
 import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { pageToSkip } from '~/utils/pagination';
 import { ListUsersDto } from './dto/list-users.dto';
 import { UserEntity } from './entities/user.entity';
 import { UsersService } from './users.service';
@@ -11,9 +12,13 @@ export class UsersController {
   @Get('/')
   @ApiOperation({ tags: ['Users'], summary: 'Retorna lista de usuarios' })
   @ApiResponse({ status: 200, type: UserEntity, isArray: true })
-  getListUsers(@Query() params: ListUsersDto) {
-    return this.usersService.getUsers({
-      name: { contains: params.name }
-    });
+  getListUsers(@Query() params?: ListUsersDto) {
+    return this.usersService.getUsers(
+      {
+        name: { contains: params?.name }
+      },
+      pageToSkip(params?.page, 100),
+      100
+    );
   }
 }
