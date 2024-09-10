@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { User } from '@prisma/client';
 import { PrismaService } from '~/database/prisma.service';
-import { prismaMock } from '~/utils/testing';
+import Testing from '~/utils/testing';
 import { UsersController } from './users.controller';
 import { UsersService } from './users.service';
 
@@ -30,7 +30,7 @@ describe('UsersController', () => {
         UsersService,
         {
           provide: PrismaService,
-          useValue: prismaMock('user', data)
+          useValue: Testing.PrismaMock('user', data)
         }
       ]
     }).compile();

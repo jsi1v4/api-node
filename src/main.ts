@@ -1,17 +1,17 @@
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import config from './config';
+import Config from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true });
 
   //* SWAGGER
-  if (config.env.dev) {
+  if (Config.Envs.Dev) {
     const swagger = new DocumentBuilder()
-      .setTitle(config.app.title)
-      .setDescription(config.app.description)
-      .setVersion(config.app.version)
+      .setTitle(Config.App.Title)
+      .setDescription(Config.App.Description)
+      .setVersion(Config.App.Version)
       .build();
 
     const document = SwaggerModule.createDocument(app, swagger);
@@ -22,7 +22,7 @@ async function bootstrap() {
   }
 
   //! APP
-  await app.listen(config.env.port);
+  await app.listen(Config.Envs.Port);
 }
 
 bootstrap();

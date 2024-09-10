@@ -3,19 +3,18 @@ import dotenv from 'dotenv';
 
 dotenv.config();
 
-const config = {
-  app: {
-    name: pkg.name,
-    title: pkg.title,
-    description: pkg.description,
-    version: pkg.version
-  },
-  env: {
-    port: process.env.PORT || 5000,
-    dev: process.env.NODE_ENV === 'development',
-    test: process.env.NODE_ENV === 'test',
-    prod: process.env.NODE_ENV === 'production'
-  }
-};
+export default class Config {
+  static readonly App = {
+    Name: pkg.name,
+    Title: pkg.title,
+    Description: pkg.description,
+    Version: pkg.version
+  };
 
-export default config;
+  static readonly Envs = {
+    Port: process.env.PORT || 5000,
+    Dev: process.env.NODE_ENV === 'development',
+    Test: process.env.NODE_ENV === 'test',
+    Prod: process.env.NODE_ENV === 'production'
+  };
+}
