@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus, Param, Query } from '@nestjs/common';
-import { ApiOperation, ApiResponse } from '@nestjs/swagger';
+import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseException } from '~/core/exceptions';
 import Pagination from '~/utils/pagination';
 import { ListUsersDto } from './dto/list-users.dto';
@@ -11,24 +11,29 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private usersService: UsersService) {}
 
+  /**
+   * Retorna lista de usuarios
+   */
   @Get('/')
-  @ApiOperation({ tags: ['Users'], summary: 'Retorna lista de usuarios' })
+  @ApiTags('Users')
   @ApiResponse({ status: HttpStatus.OK, type: UserEntity, isArray: true })
   async getListUsers(@Query() params?: ListUsersDto) {
-    return this.usersService.getUsers(
+    const users = await this.usersService.getUsers(
       {
         name: { contains: params?.name }
       },
       Pagination.PageToSkip(params?.page, 100),
       100
     );
+
+    return users;
   }
 
+  /**
+   * Retorna um usuario com base no ID informado
+   */
   @Get('/:id')
-  @ApiOperation({
-    tags: ['Users'],
-    summary: 'Retorna um usuario com base no ID informado'
-  })
+  @ApiTags('Users')
   @ApiResponse({ status: HttpStatus.OK, type: UserEntity })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ResponseException })
   async getUser(@Param() params: UserDto) {

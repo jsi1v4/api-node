@@ -17,4 +17,9 @@ export default class Config {
     Test: process.env.NODE_ENV === 'test',
     Prod: process.env.NODE_ENV === 'production'
   };
+
+  static readonly HttpClient = {
+    Timeout: 20000,
+    MaxRedirects: 5
+  };
 }
