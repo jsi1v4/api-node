@@ -1,25 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma, User } from '@prisma/client';
+import { User } from '@prisma/client';
 import { PrismaService } from '~/database/prisma.service';
+import Pagination from '~/utils/pagination';
 
 @Injectable()
 export class UsersService {
   constructor(private prisma: PrismaService) {}
 
-  getUser(where?: Prisma.UserWhereUniqueInput): Promise<User | null> {
-    return this.prisma.user.findUnique({ where });
+  findUser(id: number): Promise<User | null> {
+    return this.prisma.user.findUnique({ where: { id } });
   }
 
-  getUsers(
-    where?: Prisma.UserWhereInput,
-    skip?: number,
-    take?: number
-  ): Promise<User[]> {
+  findUsers(name?: string, page?: number): Promise<User[]> {
     return this.prisma.user.findMany({
-      where,
+      where: {
+        name: { contains: name }
+      },
       orderBy: { name: 'asc' },
-      skip: skip || 0,
-      take: take || 100
+      skip: Pagination.PageToSkip(page, 100),
+      take: 100
     });
   }
 }

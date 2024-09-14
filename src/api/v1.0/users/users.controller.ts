@@ -1,12 +1,14 @@
 import { Controller, Get, HttpStatus, Param, Query } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Role, Roles } from '~/auth/roles';
 import { ResponseException } from '~/core/exceptions';
-import Pagination from '~/utils/pagination';
 import { ListUsersDto } from './dtos/list-users.dto';
 import { UserDto } from './dtos/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UsersService } from './users.service';
 
+@ApiTags('Users')
+@ApiBearerAuth()
 @Controller()
 export class UsersController {
   constructor(private usersService: UsersService) {}
@@ -15,16 +17,10 @@ export class UsersController {
    * Retorna lista de usuarios
    */
   @Get('/')
-  @ApiTags('Users')
+  @Roles(Role.Admin, Role.User)
   @ApiResponse({ status: HttpStatus.OK, type: UserEntity, isArray: true })
   async getListUsers(@Query() params?: ListUsersDto) {
-    const users = await this.usersService.getUsers(
-      {
-        name: { contains: params?.name }
-      },
-      Pagination.PageToSkip(params?.page, 100),
-      100
-    );
+    const users = await this.usersService.findUsers(params?.name, params?.page);
 
     return users;
   }
@@ -33,13 +29,11 @@ export class UsersController {
    * Retorna um usuario com base no ID informado
    */
   @Get('/:id')
-  @ApiTags('Users')
+  @Roles(Role.Admin, Role.User)
   @ApiResponse({ status: HttpStatus.OK, type: UserEntity })
   @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ResponseException })
   async getUser(@Param() params: UserDto) {
-    const user = await this.usersService.getUser({
-      id: Number(params.id)
-    });
+    const user = await this.usersService.findUser(Number(params.id));
 
     if (!user)
       throw new ResponseException(

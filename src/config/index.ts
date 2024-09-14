@@ -20,7 +20,7 @@ export default class Config {
 
   static readonly Auth = {
     Secret: process.env.AUTH_SECRET,
-    ExpiresIn: '1h'
+    ExpiresIn: 3600
   };
 
   static readonly HttpClient = {

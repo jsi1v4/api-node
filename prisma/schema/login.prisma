@@ -1,0 +1,27 @@
+model Login {
+  id Int @id @default(autoincrement())
+
+  email      String  @unique
+  password   String?
+  invitation String?
+
+  user       User         @relation(fields: [userid], references: [id])
+  userid     Int
+  LoginRoles LoginRoles[]
+}
+
+model Roles {
+  id Int @id @default(autoincrement())
+
+  description String
+  LoginRoles  LoginRoles[]
+}
+
+model LoginRoles {
+  id Int @id @default(autoincrement())
+
+  login   Login @relation(fields: [loginid], references: [id])
+  loginid Int
+  role    Roles @relation(fields: [roleid], references: [id])
+  roleid  Int
+}

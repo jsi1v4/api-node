@@ -1,7 +1,7 @@
 model ProfileType {
   id Int @id @default(autoincrement())
 
-  description    String
+  description String
 
   Profile Profile[]
 }

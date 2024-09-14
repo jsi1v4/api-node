@@ -1,3 +1,4 @@
+import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import helmet from 'helmet';
@@ -9,6 +10,9 @@ async function bootstrap() {
 
   //? Middlewares
   app.use(helmet());
+
+  //? Global Pipes
+  app.useGlobalPipes(new ValidationPipe());
 
   //* SWAGGER
   if (Config.Envs.Dev) {
