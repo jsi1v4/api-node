@@ -2,8 +2,8 @@ import { Controller, Get, HttpStatus, Param, Query } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { ResponseException } from '~/core/exceptions';
 import Pagination from '~/utils/pagination';
-import { ListUsersDto } from './dto/list-users.dto';
-import { UserDto } from './dto/user.dto';
+import { ListUsersDto } from './dtos/list-users.dto';
+import { UserDto } from './dtos/user.dto';
 import { UserEntity } from './entities/user.entity';
 import { UsersService } from './users.service';
 

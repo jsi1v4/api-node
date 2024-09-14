@@ -18,6 +18,11 @@ export default class Config {
     Prod: process.env.NODE_ENV === 'production'
   };
 
+  static readonly Auth = {
+    Secret: process.env.AUTH_SECRET,
+    ExpiresIn: '1h'
+  };
+
   static readonly HttpClient = {
     Timeout: 20000,
     MaxRedirects: 5
