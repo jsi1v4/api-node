@@ -1,7 +1,11 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException
+} from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from 'crypto';
-import { JwtPayload } from '~/auth';
+import { JwtPayload } from '~/auth/types';
 import Config from '~/config';
 import { PrismaService } from '~/database/prisma.service';
 import { LoginEntity } from './entities/login.entity';
@@ -13,7 +17,7 @@ export class LoginService {
     private jwt: JwtService
   ) {}
 
-  async doLogin(email: string, password: string) {
+  async doLogin(email: string, password: string, issuer: string) {
     const hash = createHash('sha256').update(password).digest('hex');
 
     const login = await this.prisma.login.findUnique({
@@ -39,6 +43,7 @@ export class LoginService {
 
     const payload = new JwtPayload({
       sub: login.id,
+      iss: issuer,
       email: login.email,
       userid: user.id,
       name: user.name,
@@ -64,17 +69,17 @@ export class LoginService {
     return new JwtPayload(payload);
   }
 
-  async createInvitation(userid: number, email: string, token: string) {
-    if (token) {
-      throw new Error('Token de validação de e-mail invalido!');
-    }
+  async createInvitation(userid: number, email: string) {
+    const hash = createHash('sha256').digest('hex');
 
     const login = await this.prisma.login.create({
-      data: { userid, email }
+      data: { userid, email, invitation: hash }
     });
 
     if (!login) {
-      throw new Error('Nao foi possivel criar o login');
+      throw new BadRequestException(
+        'Nao foi possivel criar o login para o e-mail informado!'
+      );
     }
 
     return login.id;
@@ -86,7 +91,9 @@ export class LoginService {
     });
 
     if (!inv) {
-      throw new Error('Nenhum convite encontrado para este e-mail!');
+      throw new BadRequestException(
+        'Nenhum convite encontrado para este e-mail!'
+      );
     }
 
     const hash = createHash('sha256').update(password).digest('hex');

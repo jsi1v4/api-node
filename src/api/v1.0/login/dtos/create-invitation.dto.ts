@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsNumber } from 'class-validator';
+import { IsEmail, IsNumber } from 'class-validator';
 
 export class LoginCreateInvitationDto {
   @IsNumber()
@@ -6,8 +6,4 @@ export class LoginCreateInvitationDto {
 
   @IsEmail()
   email: string;
-
-  /** Token de validação de e-mail */
-  @IsNotEmpty()
-  token: string;
 }

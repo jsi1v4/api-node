@@ -1,8 +1,8 @@
-import { Body, Controller, HttpStatus, Post, Put } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Post, Put, Request as Req } from '@nestjs/common';
+import { ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { Request } from 'express';
 import { Public } from '~/auth/public';
 import { Role, Roles } from '~/auth/roles';
-import { ResponseException } from '~/core/exceptions';
 import { LoginCreateInvitationDto } from './dtos/create-invitation.dto';
 import { LoginCreatePasswordDto } from './dtos/create-password.dto';
 import { LoginDto } from './dtos/login.dto';
@@ -19,10 +19,13 @@ export class LoginController {
    */
   @Post('/')
   @Public()
-  @ApiResponse({ status: HttpStatus.OK, type: LoginEntity })
-  @ApiResponse({ status: HttpStatus.BAD_REQUEST, type: ResponseException })
-  async postLogin(@Body() body?: LoginDto) {
-    return this.loginService.doLogin(body.email, body.password);
+  @ApiOkResponse({ type: LoginEntity })
+  async postLogin(@Req() req: Request, @Body() body: LoginDto) {
+    return this.loginService.doLogin(
+      body.email,
+      body.password,
+      `${req.protocol}://${req.hostname}`
+    );
   }
 
   /**
@@ -30,17 +33,12 @@ export class LoginController {
    */
   @Post('/create-invitation')
   @Roles(Role.Admin)
-  @ApiResponse({
-    status: HttpStatus.OK,
+  @ApiOkResponse({
     type: Number,
     description: 'Codigo do login'
   })
-  async postCreateInvitation(@Body() body?: LoginCreateInvitationDto) {
-    return this.loginService.createInvitation(
-      body.userid,
-      body.email,
-      body.token
-    );
+  async postCreateInvitation(@Body() body: LoginCreateInvitationDto) {
+    return this.loginService.createInvitation(body.userid, body.email);
   }
 
   /**
@@ -48,12 +46,11 @@ export class LoginController {
    */
   @Put('/create-password')
   @Public()
-  @ApiResponse({
-    status: HttpStatus.OK,
+  @ApiOkResponse({
     type: Number,
     description: 'Codigo do login'
   })
-  async putCreatePassword(@Body() body?: LoginCreatePasswordDto) {
+  async putCreatePassword(@Body() body: LoginCreatePasswordDto) {
     return this.loginService.createPassword(
       body.userid,
       body.password,
