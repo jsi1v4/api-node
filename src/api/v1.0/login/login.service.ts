@@ -1,7 +1,7 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { createHash } from 'crypto';
-import { JwtPayload } from '~/auth/auth.entity';
+import { JwtPayload } from '~/auth';
 import Config from '~/config';
 import { PrismaService } from '~/database/prisma.service';
 import { LoginEntity } from './entities/login.entity';
@@ -21,7 +21,7 @@ export class LoginService {
     });
 
     if (!login) {
-      throw new UnauthorizedException();
+      throw new UnauthorizedException('Login invalido!');
     }
 
     const user = await this.prisma.user.findUnique({
@@ -29,7 +29,7 @@ export class LoginService {
     });
 
     if (!user) {
-      throw new Error('Usuario não encontrado!');
+      throw new UnauthorizedException('Usuario não encontrado!');
     }
 
     const roles = await this.prisma.loginRoles.findMany({
@@ -37,26 +37,31 @@ export class LoginService {
       select: { role: true }
     });
 
-    const payload = new JwtPayload();
-
-    payload.sub = login.id;
-    payload.email = login.email;
-    payload.userid = user.id;
-    payload.name = user.name;
-    payload.photo = user.photo;
-    payload.roles = roles.map((x) => x.role.description);
+    const payload = new JwtPayload({
+      sub: login.id,
+      email: login.email,
+      userid: user.id,
+      name: user.name,
+      photo: user.photo,
+      roles: roles.map((x) => x.role.description)
+    });
 
     const token = await this.jwt.signAsync({ ...payload });
 
     const expires = Config.Auth.ExpiresIn;
 
-    const result = new LoginEntity();
-
-    result.id = login.id;
-    result.accessToken = token;
-    result.expires = expires;
+    const result = new LoginEntity({
+      id: login.id,
+      accessToken: token,
+      expires: expires
+    });
 
     return result;
+  }
+
+  async checkToken(token: string) {
+    const payload = await this.jwt.verifyAsync(token);
+    return new JwtPayload(payload);
   }
 
   async createInvitation(userid: number, email: string, token: string) {

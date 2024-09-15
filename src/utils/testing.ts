@@ -16,4 +16,20 @@ export default class Testing {
       }
     };
   }
+
+  static PrismaMocks(entitys: { [key: string]: any[] }) {
+    const result = {};
+
+    for (const key of Object.keys(entitys)) {
+      result[key] = {
+        create: jest.fn().mockReturnValue(entitys[key][0]),
+        findMany: jest.fn().mockResolvedValue(entitys[key]),
+        findUnique: jest.fn().mockResolvedValue(entitys[key][0]),
+        update: jest.fn().mockResolvedValue(entitys[key][0]),
+        delete: jest.fn()
+      };
+    }
+
+    return result;
+  }
 }
