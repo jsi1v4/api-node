@@ -8,7 +8,16 @@ export default class Config {
     Name: pkg.name,
     Title: pkg.title,
     Description: pkg.description,
-    Version: pkg.version
+    Version: pkg.version,
+    Author: {
+      Name: /.+\s/g.exec(pkg.author)?.[0],
+      Email: /<.+>/g.exec(pkg.author)?.[0],
+      Url: pkg.authorUrl
+    },
+    License: {
+      Name: pkg.license,
+      Url: pkg.licenseUrl
+    }
   };
 
   static readonly Envs = {

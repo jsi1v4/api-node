@@ -5,8 +5,10 @@
   "description": "My API built with NestJS and Prisma.",
   "main": "index.js",
   "repository": "https://github.com/jsi1v4/api-node.git",
-  "author": "jsi1v4 <git@jsi1v4.com>",
+  "author": "Jsi1v4 <git@jsi1v4.com>",
+  "authorUrl": "https://josepaulo.dev",
   "license": "MIT",
+  "licenseUrl": "https://opensource.org/license/mit",
   "private": false,
   "scripts": {
     "dev": "nest start --watch",

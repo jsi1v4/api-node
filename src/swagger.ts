@@ -12,7 +12,13 @@ export default class Swagger {
     const swagger = new DocumentBuilder()
       .setTitle(Config.App.Title)
       .setDescription(Config.App.Description)
-      .setVersion(Config.App.Version)
+      .setVersion('v' + Config.App.Version)
+      .setContact(
+        Config.App.Author.Name,
+        Config.App.Author.Url,
+        Config.App.Author.Email
+      )
+      .setLicense(Config.App.License.Name, Config.App.License.Url)
       .addBearerAuth()
       .build();
 
@@ -21,6 +27,7 @@ export default class Swagger {
     });
 
     SwaggerModule.setup('swagger', app, document, {
+      customSiteTitle: Config.App.Title,
       jsonDocumentUrl: 'swagger/json'
     });
   }
