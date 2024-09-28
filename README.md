@@ -23,6 +23,7 @@ O projeto foi desenvolvido utilizando as seguintes tecnologias:
 - [NestJS](https://docs.nestjs.com)
 - [Prisma](https://www.prisma.io)
 - [Docker](https://www.docker.com)
+- [Swagger](https://docs.nestjs.com/openapi/introduction)
 
 ## Como baixar e executar o projeto
 
@@ -41,9 +42,11 @@ npm i
 ### Executar em localhost
 
 ```sh
-# run in http://localhost:5000
+# run in http://localhost:5001
 npm run dev
 ```
+
+> Documentação disponivel em [http://localhost:5001/swagger](http://localhost:5001/swagger)
 
 ### Buildar projeto
 

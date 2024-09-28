@@ -16,8 +16,7 @@ async function bootstrap() {
 
   //* SWAGGER
   if (Config.Envs.Dev) {
-    const swagger = new Swagger();
-    swagger.setup(app);
+    Swagger.setup(app);
   }
 
   //! APP

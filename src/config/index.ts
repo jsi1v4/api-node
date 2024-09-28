@@ -21,7 +21,7 @@ export default class Config {
   };
 
   static readonly Envs = {
-    Port: process.env.PORT || 5000,
+    Port: process.env.PORT || 5001,
     Dev: process.env.NODE_ENV === 'development',
     Test: process.env.NODE_ENV === 'test',
     Prod: process.env.NODE_ENV === 'production'

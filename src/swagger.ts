@@ -8,7 +8,9 @@ import { JwtPayload } from './auth/types';
 import Config from './config';
 
 export default class Swagger {
-  setup(app: INestApplication) {
+  constructor() {}
+
+  static setup(app: INestApplication) {
     const swagger = new DocumentBuilder()
       .setTitle(Config.App.Title)
       .setDescription(Config.App.Description)
@@ -28,7 +30,8 @@ export default class Swagger {
 
     SwaggerModule.setup('swagger', app, document, {
       customSiteTitle: Config.App.Title,
-      jsonDocumentUrl: 'swagger/json'
+      jsonDocumentUrl: '/swagger/json',
+      explorer: false
     });
   }
 }
