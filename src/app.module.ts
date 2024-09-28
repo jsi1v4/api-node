@@ -1,11 +1,9 @@
 import { HttpModule } from '@nestjs/axios';
 import { Module } from '@nestjs/common';
-import { RouterModule } from '@nestjs/core';
 import { ThrottlerModule } from '@nestjs/throttler';
-import { ApiModule } from './api/api.module';
-import apiRoutes from './api/api.routes';
 import { AuthModule } from './auth/auth.module';
 import Config from './config';
+import { FeaturesModule } from './features/features.module';
 
 @Module({
   imports: [
@@ -15,18 +13,12 @@ import Config from './config';
         limit: 10
       }
     ]),
-    ApiModule,
-    RouterModule.register([
-      {
-        path: '/api',
-        children: apiRoutes
-      }
-    ]),
     HttpModule.register({
       timeout: Config.HttpClient.Timeout,
       maxRedirects: Config.HttpClient.MaxRedirects
     }),
-    AuthModule
+    AuthModule,
+    FeaturesModule
   ]
 })
 export class AppModule {}

@@ -10,7 +10,7 @@ import { LoginEntity } from './entities/login.entity';
 import { LoginService } from './login.service';
 
 @ApiTags('Login')
-@Controller()
+@Controller('/v1/login')
 export class LoginController {
   constructor(private loginService: LoginService) {}
 

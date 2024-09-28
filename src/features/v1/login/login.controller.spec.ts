@@ -97,10 +97,16 @@ describe('LoginController', () => {
   });
 
   it('should return access token', async () => {
-    const login = await controller.postLogin({
-      email: 'test@test.com',
-      password: 'test1234'
-    });
+    const login = await controller.postLogin(
+      {
+        protocol: 'https',
+        hostname: 'test.com'
+      } as never,
+      {
+        email: 'test@test.com',
+        password: 'test1234'
+      }
+    );
 
     const payload = await service.checkToken(login.accessToken);
 
