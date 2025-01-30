@@ -1,6 +1,6 @@
 # API NodeJS
 
-My API NodeJs built in NestJS and Prisma, [take a look](https://api-node.josepaulo.dev/api/v1.0/welcome) 🖖.
+My API NodeJs built in NestJS and Prisma 🖖.
 
 ![**Preview**](preview.png)
 
